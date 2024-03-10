@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import nl.tudelft.jpacman.level.Player;
+import nl.tudelft.jpacman.utils.ObjectValidator;
 
 /**
  * A panel consisting of a column for each player, with the numbered players on
@@ -33,7 +34,7 @@ public class ScorePanel extends JPanel {
      * The default way in which the score is shown.
      */
     public static final ScoreFormatter DEFAULT_SCORE_FORMATTER =
-        (Player player) -> String.format("Score: %3d", player.getScore());
+        (Player player) -> String.format("Remaining Lives: %1d. Score: %3d", player.getRemainingLives(), player.getScore());
 
     /**
      * The way to format the score information.
@@ -48,7 +49,7 @@ public class ScorePanel extends JPanel {
      */
     public ScorePanel(List<Player> players) {
         super();
-        assert players != null;
+        ObjectValidator.isArgNotNull(players, "players");
 
         setLayout(new GridLayout(2, players.size()));
 
@@ -96,7 +97,7 @@ public class ScorePanel extends JPanel {
      * @param scoreFormatter Score formatter to be used.
      */
     public void setScoreFormatter(ScoreFormatter scoreFormatter) {
-        assert scoreFormatter != null;
+        ObjectValidator.isArgNotNull(scoreFormatter, "scoreFormatter");
         this.scoreFormatter = scoreFormatter;
     }
 }
