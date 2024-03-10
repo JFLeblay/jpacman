@@ -1,5 +1,7 @@
 package nl.tudelft.jpacman.ui;
 
+import nl.tudelft.jpacman.utils.ObjectValidator;
+
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -26,6 +28,7 @@ class ButtonPanel extends JPanel {
     ButtonPanel(final Map<String, Action> buttons, final JFrame parent) {
         super();
         assert buttons != null;
+        ObjectValidator.isNotEmpty(buttons, "buttons");
         assert parent != null;
 
         for (final String caption : buttons.keySet()) {

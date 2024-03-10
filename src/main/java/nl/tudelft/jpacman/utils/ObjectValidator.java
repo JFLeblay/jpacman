@@ -1,6 +1,9 @@
 package nl.tudelft.jpacman.utils;
 
+import nl.tudelft.jpacman.ui.Action;
+
 import java.util.List;
+import java.util.Map;
 
 public class ObjectValidator {
     /**
@@ -34,6 +37,14 @@ public class ObjectValidator {
      * @param name the name of the parameter to check
      */
     public static <T> void isNotEmpty(List<T> list, String name) {
-        assert !list.isEmpty();
+        if (list.isEmpty()) {
+            throw new IllegalStateException(String.format("List %s cannot be empty", name));
+        }
+    }
+
+    public static <K, V> void isNotEmpty(Map<K, V> map, String name) {
+        if (map.isEmpty()) {
+            throw new IllegalStateException(String.format("Map %s cannot be empty", name));
+        }
     }
 }
