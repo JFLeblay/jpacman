@@ -6,6 +6,7 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.ui.ScorePanel.ScoreFormatter;
+import nl.tudelft.jpacman.utils.ObjectValidator;
 
 /**
  * Builder for the JPac-Man UI.
@@ -23,6 +24,11 @@ public class PacManUiBuilder {
      * Caption for the default start button.
      */
     private static final String START_CAPTION = "Start";
+
+    /**
+     * Caption for the default continue button.
+     */
+    private static final String CONTINUE_CAPTION = "Continue";
 
     /**
      * Map of buttons and their actions.
@@ -61,7 +67,7 @@ public class PacManUiBuilder {
      * @return A new Pac-Man UI with the set keys and buttons.
      */
     public PacManUI build(final Game game) {
-        assert game != null;
+        ObjectValidator.isArgNotNull(game, "game");
 
         if (defaultButtons) {
             addStartButton(game);
@@ -78,7 +84,7 @@ public class PacManUiBuilder {
      *            The game to stop.
      */
     private void addStopButton(final Game game) {
-        assert game != null;
+        ObjectValidator.isArgNotNull(game, "game");
 
         buttons.put(STOP_CAPTION, game::stop);
     }
@@ -91,9 +97,20 @@ public class PacManUiBuilder {
      *            The game to start.
      */
     private void addStartButton(final Game game) {
-        assert game != null;
-
+        ObjectValidator.isArgNotNull(game, "game");
         buttons.put(START_CAPTION, game::start);
+    }
+
+    /**
+     * Adds a button with the caption {@value #CONTINUE_CAPTION} that continues the
+     * game after Pacman was killed but remaining lives are positive.
+     *
+     * @param game
+     *            The game to start.
+     */
+    private void addContinueButton(final Game game) {
+        ObjectValidator.isArgNotNull(game, "game");
+        buttons.put(CONTINUE_CAPTION, game::continueGame);
     }
 
     /**
@@ -106,28 +123,10 @@ public class PacManUiBuilder {
      * @return The builder.
      */
     public PacManUiBuilder addKey(Integer keyCode, Action action) {
-        assert keyCode != null;
-        assert action != null;
+        ObjectValidator.isArgNotNull(keyCode, "keyCode");
+        ObjectValidator.isArgNotNull(action, "action");
 
         keyMappings.put(keyCode, action);
-        return this;
-    }
-
-    /**
-     * Adds a button to the UI.
-     *
-     * @param caption
-     *            The caption of the button.
-     * @param action
-     *            The action to execute when the button is clicked.
-     * @return The builder.
-     */
-    public PacManUiBuilder addButton(String caption, Action action) {
-        assert caption != null;
-        assert !caption.isEmpty();
-        assert action != null;
-
-        buttons.put(caption, action);
         return this;
     }
 
@@ -140,6 +139,7 @@ public class PacManUiBuilder {
     public PacManUiBuilder withDefaultButtons() {
         defaultButtons = true;
         buttons.put(START_CAPTION, null);
+        buttons.put(CONTINUE_CAPTION, null);
         buttons.put(STOP_CAPTION, null);
         return this;
     }
