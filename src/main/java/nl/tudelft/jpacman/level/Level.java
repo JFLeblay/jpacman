@@ -16,6 +16,7 @@ import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Square;
 import nl.tudelft.jpacman.board.Unit;
 import nl.tudelft.jpacman.npc.Ghost;
+import nl.tudelft.jpacman.utils.ObjectValidator;
 
 /**
  * A level of Pac-Man. A level consists of the board with the players and the
@@ -92,9 +93,9 @@ public class Level {
      */
     public Level(Board board, List<Ghost> ghosts, List<Square> startPositions,
                  CollisionMap collisionMap) {
-        assert board != null;
-        assert ghosts != null;
-        assert startPositions != null;
+        ObjectValidator.isArgNotNull(board, "board");
+        ObjectValidator.isArgNotNull(ghosts, "ghosts");
+        ObjectValidator.isNotNull(startPositions, "startPositions");
 
         this.board = board;
         this.inProgress = false;
@@ -138,8 +139,8 @@ public class Level {
      *            The player to register.
      */
     public void registerPlayer(Player player) {
-        assert player != null;
-        assert !startSquares.isEmpty();
+        ObjectValidator.isArgNotNull(player, "player");
+        ObjectValidator.isNotEmpty(startSquares, "startSquares");
 
         if (players.contains(player)) {
             return;
@@ -170,9 +171,15 @@ public class Level {
      *            The direction to move the unit in.
      */
     public void move(Unit unit, Direction direction) {
-        assert unit != null;
-        assert direction != null;
-        assert unit.hasSquare();
+        ObjectValidator.isArgNotNull(unit, "unit");
+        ObjectValidator.isArgNotNull(direction, "direction");
+        /*
+         TODO: Refactor the following line with ParameterChecker later
+               as the method Unit.hasSquare is called by many classes, that would incur
+               too many changes in the project.
+               For now, throw the generic RuntimeException
+        */
+        if (!unit.hasSquare()) throw new RuntimeException("Unit square cannot be Null");
 
         if (!isInProgress()) {
             return;
@@ -244,7 +251,7 @@ public class Level {
     private void stopNPCs() {
         for (Entry<Ghost, ScheduledExecutorService> entry : npcs.entrySet()) {
             ScheduledExecutorService schedule = entry.getValue();
-            assert schedule != null;
+            ObjectValidator.isNotNull(schedule, "schedule");
             schedule.shutdownNow();
         }
     }
@@ -308,7 +315,7 @@ public class Level {
                 }
             }
         }
-        assert pellets >= 0;
+        if (pellets < 0) throw new IllegalStateException("remainingPellets cannot be negative");
         return pellets;
     }
 
