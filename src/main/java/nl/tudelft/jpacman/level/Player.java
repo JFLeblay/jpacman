@@ -86,6 +86,7 @@ public class Player extends Unit {
 
         if (!isAlive) {
             this.remainingLives--;
+            this.setDirection(Direction.EAST);
             deathSprite.restart();
         }
         this.alive = isAlive;
