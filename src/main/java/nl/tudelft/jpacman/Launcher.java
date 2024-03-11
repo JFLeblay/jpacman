@@ -12,6 +12,7 @@ import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.ui.Action;
 import nl.tudelft.jpacman.ui.PacManUI;
 import nl.tudelft.jpacman.ui.PacManUiBuilder;
+import nl.tudelft.jpacman.utils.ObjectValidator;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -160,7 +161,7 @@ public class Launcher {
 
     private Action moveTowardsDirection(Direction direction) {
         return () -> {
-            assert game != null;
+            ObjectValidator.isNotNull(game, "game");
             getGame().move(getSinglePlayer(getGame()), direction);
         };
     }
