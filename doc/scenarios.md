@@ -144,6 +144,23 @@ Given the game is suspended;
 When  the player hits the "Start" button;
 Then  the game is resumed.
 ```
+#### Story 5: Player has 3 lives when starting the game
+```
+As a player,
+  I want to have 3 lives at the start of the game;
+So that I can have more fun playing Pac-Man.
+
+Scenario S5.1: The player dies but has more than 1 remaining lives.
+Given the game has started and the player has remaining lives;
+When  the player collides a ghost
+Then  after 3 seconds, the board is refreshed and the player
+      can press the "Start" button to continue the game.
+
+Scenario S5.2: The player dies but has 1 remaining life.
+Given the game has started and the player has 1 remaining life;
+When  the player collides a ghost
+Then  the score displays the text "Game over." and the game ends.
+```
 
 ## 3. User Interface
 
