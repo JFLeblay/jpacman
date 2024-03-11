@@ -34,7 +34,7 @@ public class ScorePanel extends JPanel {
      * The default way in which the score is shown.
      */
     public static final ScoreFormatter DEFAULT_SCORE_FORMATTER =
-        (Player player) -> String.format("Remaining Lives: %1d. Score: %3d", player.getRemainingLives(), player.getScore());
+        (Player player) -> String.format("Remaining Lives: %1d. Score: %3d", Math.max(player.getRemainingLives(), 0), player.getScore());
 
     /**
      * The way to format the score information.
