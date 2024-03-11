@@ -173,13 +173,7 @@ public class Level {
     public void move(Unit unit, Direction direction) {
         ObjectValidator.isArgNotNull(unit, "unit");
         ObjectValidator.isArgNotNull(direction, "direction");
-        /*
-         TODO: Refactor the following line with ParameterChecker later
-               as the method Unit.hasSquare is called by many classes, that would incur
-               too many changes in the project.
-               For now, throw the generic RuntimeException
-        */
-        if (!unit.hasSquare()) throw new RuntimeException("Unit square cannot be Null");
+        if (!unit.hasSquare()) throw new IllegalStateException("Unit square cannot be Null");
 
         if (!isInProgress()) {
             return;
