@@ -1,11 +1,13 @@
 package nl.tudelft.jpacman.utils;
 
-import nl.tudelft.jpacman.ui.Action;
-
 import java.util.List;
 import java.util.Map;
 
 public class ObjectValidator {
+
+    // Hide constructor
+    private ObjectValidator() {}
+
     /**
      * Throws an <code>IllegalArgumentException</code> if object is Null
      *

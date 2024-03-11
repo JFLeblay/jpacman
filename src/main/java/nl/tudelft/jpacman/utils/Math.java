@@ -12,7 +12,7 @@ public class Math {
         try {
             Math.random = getInstanceStrong();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new IllegalCallerException(e);
         }
     }
 
