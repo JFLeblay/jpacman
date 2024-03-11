@@ -94,6 +94,7 @@ public class LauncherSmokeTest {
         move(game, Direction.WEST, 10);
         move(game, Direction.EAST, 10);
         assertThat(player.isAlive()).isFalse();
+        assertThat(player.getRemainingLives()).isEqualTo(2);
 
         game.stop();
         assertThat(game.isInProgress()).isFalse();
