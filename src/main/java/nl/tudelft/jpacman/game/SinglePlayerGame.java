@@ -1,6 +1,9 @@
 package nl.tudelft.jpacman.game;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import nl.tudelft.jpacman.Launcher;
 import nl.tudelft.jpacman.level.Level;
@@ -69,14 +72,18 @@ public class SinglePlayerGame extends Game {
     @Override
     public void resetGame() {
         if (getPlayers().get(0).getRemainingLives() > 0) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            getPlayers().get(0).setAlive(true);
-            this.level = launcher.makeLevel();
-            this.level.registerPlayer(getPlayers().get(0));
+
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+            executorService.schedule(() -> {
+                System.out.println("Reset game");
+                System.out.println(String.format("Remaining lives: %d", getPlayers().get(0).getRemainingLives()));
+                System.out.println(String.format("isAlive lives: %b", getPlayers().get(0).isAlive()));
+                getPlayers().get(0).setAlive(true);
+                this.level = launcher.makeLevel();
+                this.level.registerPlayer(getPlayers().get(0));
+            }, 3, TimeUnit.SECONDS);
+
         }
     }
 }
