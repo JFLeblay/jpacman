@@ -59,6 +59,22 @@ public abstract class Game implements LevelObserver {
     }
 
     /**
+     * Continues the game after the Pacman was killed.
+     */
+    public void continueGame() {
+        synchronized (progressLock) {
+            if (isInProgress()) {
+                return;
+            }
+            if (getLevel().isAnyPlayerAlive() && getLevel().remainingPellets() > 0) {
+                inProgress = true;
+                getLevel().addObserver(this);
+                getLevel().continueGame();
+            }
+        }
+    }
+
+    /**
      * Pauses the game.
      */
     public void stop() {

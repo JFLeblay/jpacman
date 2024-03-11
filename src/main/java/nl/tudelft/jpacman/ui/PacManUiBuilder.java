@@ -71,6 +71,7 @@ public class PacManUiBuilder {
 
         if (defaultButtons) {
             addStartButton(game);
+            addContinueButton(game);
             addStopButton(game);
         }
         return new PacManUI(game, buttons, keyMappings, scoreFormatter);
