@@ -28,7 +28,6 @@ class ButtonPanel extends JPanel {
     ButtonPanel(final Map<String, Action> buttons, final JFrame parent) {
         super();
         ObjectValidator.isNotEmpty(buttons, "buttons");
-        assert parent != null;
         ObjectValidator.isArgNotNull(parent, "parent");
 
         for (final String caption : buttons.keySet()) {
