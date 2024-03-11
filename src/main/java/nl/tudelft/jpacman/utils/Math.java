@@ -16,6 +16,9 @@ public class Math {
         }
     }
 
+    // Hide constructor
+    private Math() {}
+
     /**
      * Singleton, always return the same instance
      * @return java.util.Random
