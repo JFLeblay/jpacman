@@ -26,11 +26,6 @@ public class PacManUiBuilder {
     private static final String START_CAPTION = "Start";
 
     /**
-     * Caption for the default continue button.
-     */
-    private static final String CONTINUE_CAPTION = "Continue";
-
-    /**
      * Map of buttons and their actions.
      */
     private final Map<String, Action> buttons;
@@ -71,7 +66,6 @@ public class PacManUiBuilder {
 
         if (defaultButtons) {
             addStartButton(game);
-            addContinueButton(game);
             addStopButton(game);
         }
         return new PacManUI(game, buttons, keyMappings, scoreFormatter);
@@ -103,18 +97,6 @@ public class PacManUiBuilder {
     }
 
     /**
-     * Adds a button with the caption {@value #CONTINUE_CAPTION} that continues the
-     * game after Pacman was killed but remaining lives are positive.
-     *
-     * @param game
-     *            The game to start.
-     */
-    private void addContinueButton(final Game game) {
-        ObjectValidator.isArgNotNull(game, "game");
-        buttons.put(CONTINUE_CAPTION, game::continueGame);
-    }
-
-    /**
      * Adds a key listener to the UI.
      *
      * @param keyCode
@@ -140,7 +122,6 @@ public class PacManUiBuilder {
     public PacManUiBuilder withDefaultButtons() {
         defaultButtons = true;
         buttons.put(START_CAPTION, null);
-        buttons.put(CONTINUE_CAPTION, null);
         buttons.put(STOP_CAPTION, null);
         return this;
     }
