@@ -1,5 +1,6 @@
 package nl.tudelft.jpacman.game;
 
+import nl.tudelft.jpacman.Launcher;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.PlayerFactory;
 import nl.tudelft.jpacman.points.PointCalculator;
@@ -35,8 +36,8 @@ public class GameFactory {
      *             The way to calculate points upon collisions.
      * @return A new single player game.
      */
-    public Game createSinglePlayerGame(Level level, PointCalculator pointCalculator) {
-        return new SinglePlayerGame(playerFactory.createPacMan(), level, pointCalculator);
+    public Game createSinglePlayerGame(Launcher launcher, Level level, PointCalculator pointCalculator) {
+        return new SinglePlayerGame(launcher, playerFactory.createPacMan(), level, pointCalculator);
     }
 
     /**

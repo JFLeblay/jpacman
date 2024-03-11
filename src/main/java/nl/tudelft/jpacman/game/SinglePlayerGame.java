@@ -2,6 +2,7 @@ package nl.tudelft.jpacman.game;
 
 import java.util.List;
 
+import nl.tudelft.jpacman.Launcher;
 import nl.tudelft.jpacman.level.Level;
 import nl.tudelft.jpacman.level.Player;
 
@@ -16,6 +17,11 @@ import nl.tudelft.jpacman.points.PointCalculator;
 public class SinglePlayerGame extends Game {
 
     /**
+     * The Launcher of this game.
+     */
+    private final Launcher launcher;
+
+    /**
      * The player of this game.
      */
     private final Player player;
@@ -23,7 +29,7 @@ public class SinglePlayerGame extends Game {
     /**
      * The level of this game.
      */
-    private final Level level;
+    private Level level;
 
     /**
      * Create a new single player game for the provided level and player.
@@ -35,12 +41,13 @@ public class SinglePlayerGame extends Game {
      * @param pointCalculator
      *            The way to calculate points upon collisions.
      */
-    protected SinglePlayerGame(Player player, Level level, PointCalculator pointCalculator) {
+    protected SinglePlayerGame(Launcher launcher, Player player, Level level, PointCalculator pointCalculator) {
         super(pointCalculator);
 
         assert player != null;
         assert level != null;
 
+        this.launcher = launcher;
         this.player = player;
         this.level = level;
         this.level.registerPlayer(player);
@@ -54,5 +61,22 @@ public class SinglePlayerGame extends Game {
     @Override
     public Level getLevel() {
         return level;
+    }
+
+    /**
+     * Continues the game after the Pacman was killed and remaining lives > 0
+     */
+    @Override
+    public void resetGame() {
+        if (getPlayers().get(0).getRemainingLives() > 0) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            getPlayers().get(0).setAlive(true);
+            this.level = launcher.makeLevel();
+            this.level.registerPlayer(getPlayers().get(0));
+        }
     }
 }
