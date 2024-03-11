@@ -30,6 +30,11 @@ public class Player extends Unit {
     private final AnimatedSprite deathSprite;
 
     /**
+     * The number of lives for a new game
+     */
+    private int remainingLives;
+
+    /**
      * <code>true</code> iff this player is alive.
      */
     private boolean alive;
@@ -48,6 +53,7 @@ public class Player extends Unit {
      *            The sprite to be shown when this player dies.
      */
     protected Player(Map<Direction, Sprite> spriteMap, AnimatedSprite deathAnimation) {
+        this.remainingLives = 3;
         this.score = 0;
         this.alive = true;
         this.sprites = spriteMap;
@@ -77,8 +83,15 @@ public class Player extends Unit {
             deathSprite.setAnimating(false);
             this.killer = null;
         }
+
+        this.remainingLives--;
+
         if (!isAlive) {
             deathSprite.restart();
+            if (this.remainingLives > 0) {
+                this.alive = true;
+                return;
+            }
         }
         this.alive = isAlive;
     }
@@ -127,5 +140,12 @@ public class Player extends Unit {
      */
     public void addPoints(int points) {
         score += points;
+    }
+
+    /**
+     * @return the number of remaining lives the player has
+     */
+    public int getRemainingLives() {
+        return remainingLives;
     }
 }
