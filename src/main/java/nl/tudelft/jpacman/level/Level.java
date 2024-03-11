@@ -321,14 +321,19 @@ public class Level {
         int pellets = 0;
         for (int x = 0; x < currentBoard.getWidth(); x++) {
             for (int y = 0; y < currentBoard.getHeight(); y++) {
-                for (Unit unit : currentBoard.squareAt(x, y).getOccupants()) {
-                    if (unit instanceof Pellet) {
-                        pellets++;
-                    }
-                }
+                pellets = countPelletsAtSquare(currentBoard, x, y, pellets);
             }
         }
         if (pellets < 0) throw new IllegalStateException("remainingPellets cannot be negative");
+        return pellets;
+    }
+
+    private static int countPelletsAtSquare(Board currentBoard, int x, int y, int pellets) {
+        for (Unit unit : currentBoard.squareAt(x, y).getOccupants()) {
+            if (unit instanceof Pellet) {
+                pellets++;
+            }
+        }
         return pellets;
     }
 
